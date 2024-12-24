@@ -1,5 +1,5 @@
 # jVars
-## Warcraft CVars mod, since 2019
+## Warcraft CVars mod, since 2016
 
 ## License
 [![License](https://img.shields.io/badge/license-GPL-blue)](LICENSE)
