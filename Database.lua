@@ -31,7 +31,6 @@ Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
                 };
 
                 Defaults.Vars[ string.lower( VarName ) ] = {
-                    Protected = VarData.Protected or nil,
                     Missing = Dict.Missing or false,
                     Cascade = VarData.Cascade or {},
                     Value = Dict.CurrentValue,
