@@ -566,6 +566,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             -- Options
             self.Theme = {
+                Background = {
+                    r = 41/255,
+                    g = 33/255,
+                    b = 36/255,
+                    a = .5,
+                },
                 HighLight = Addon.Theme[ self:GetValue( 'Theme' ) ],
                 Normal = Addon.Theme.Text,
             };
@@ -667,14 +673,14 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Heading.Adjustment:SetSize( 150,self.Heading.FieldHeight );
             self.Heading.Adjustment:SetJustifyH( 'left' );
 
-            self.Heading.Art = Addon.FRAMES:AddBackGround( self.Heading );
+            self.Heading.Art = Addon.FRAMES:AddBackGround( self.Heading,self.Theme.Background );
             self.Heading.Art:SetAllPoints( self.Heading );
 
             self.Browser = CreateFrame( 'Frame',self.Name..'Browser',self.Config );
             self.Browser:SetSize( self.Heading:GetWidth(),400 );
             self.Browser:SetPoint( 'topleft',self.Heading,'bottomleft',0,-10 );
 
-            self.Browser.Art = Addon.FRAMES:AddBackGround( self.Browser );
+            self.Browser.Art = Addon.FRAMES:AddBackGround( self.Browser,self.Theme.Background );
             self.Browser.Art:SetAllPoints( self.Browser );
   
             self.Browser.BookEnd = self.Browser:CreateTexture( nil,'ARTWORK',nil,3 );
@@ -699,7 +705,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Footer:SetSize( self.Browser:GetWidth(),50 );
             self.Footer:SetPoint( 'topleft',self.Browser,'bottomleft',0,-10 );
 
-            self.Footer.Art = Addon.FRAMES:AddBackGround( self.Footer );
+            self.Footer.Art = Addon.FRAMES:AddBackGround( self.Footer,self.Theme.Background );
             self.Footer.Art:SetAllPoints( self.Footer );
 
             self.Footer.BookEnd = self.Browser:CreateTexture( nil,'ARTWORK',nil,3 );
