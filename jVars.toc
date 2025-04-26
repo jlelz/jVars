@@ -21,7 +21,6 @@
 #https://markdownlivepreview.com/
 
 # Required libs
-Libs\Taintless\TaintLess.xml
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 
