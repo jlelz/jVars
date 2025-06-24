@@ -367,6 +367,10 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                         },
                     },
                 },
+                findYourselfModeIcon = {
+                    Type = 'Toggle',
+                    Category = 'Character',
+                },
                 nameplateOtherAtBase = {
                     Type = 'Range',
                     KeyPairs = {

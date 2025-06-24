@@ -103,6 +103,10 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
                 if( GetCVar( 'findYourselfModeOutline' ) ~= 1 ) then -- https://warcraft.wiki.gg/wiki/Patch_11.0.0/API_changes
                     SetCVar( 'findYourselfModeOutline',1,nil,true );
+                    SetCVar( 'findYourselfModeCircle',1 );
+                end
+                if( tonumber( Value ) == 2 ) then
+                    SetCVar( 'findYourselfModeCircle',0 );
                 end
             else
                 if( GetCVar( 'findyourselfanywhere' ) ~= 0 ) then
@@ -110,6 +114,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
                 if( GetCVar( 'findYourselfModeOutline' ) ~= 0 ) then -- https://warcraft.wiki.gg/wiki/Patch_11.0.0/API_changes
                     SetCVar( 'findYourselfModeOutline',0,nil,true );
+                end
+                if( GetCVar( 'findYourselfModeCircle' ) ~= 0 ) then
+                    SetCVar( 'findYourselfModeCircle',0,nil,true );
                 end
             end
         end
