@@ -323,6 +323,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Name = 'ExportWindow',
                 Value = '',
             },Parent );
+            Frame.Butt:Hide();
             Frame:SetSize( SettingsPanel:GetWidth()-100,350 );
             Frame:SetPoint( 'center',SettingsPanel,'center' );
             SettingsPanel:HookScript( 'OnHide',function()
