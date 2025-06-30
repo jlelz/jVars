@@ -1580,6 +1580,10 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Sound',
                 },
+                Sound_EnableDialog = {
+                    Type = 'Toggle',
+                    Category = 'Sound',
+                },
                 Sound_ZoneMusicNoDelay = {
                     Type = 'Toggle',
                     Category = 'Sound',
