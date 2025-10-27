@@ -369,6 +369,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Frame.Ok:SetScript( 'OnClick',function( self )
                 local Value = self:GetParent().Edit.Input:GetText();
                 if( Value ) then
+
+                    -- Build the changeset
                     local Data = {};
                     local Tmp = Addon:Explode( Value,',' )
                     for _,SetString in pairs( Tmp ) do
@@ -380,14 +382,26 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                             };
                         end
                     end
+                    if( Addon.DB:GetValue( 'Debug' ) ) then
+                        Addon.FRAMES:Debug( 'Addon.APP.AddMovablePort','Frame.OK:OnClick','Data was built' );
+                    end
 
+                    -- Test the data
                     local IsValid = function( VarName )
                         return Addon.DB:GetPersistence().Vars[ string.lower( VarName ) ] ~= nil and Addon.DICT:GetDictionary()[ string.lower( VarName ) ] ~= nil;
+                    end
+
+                    -- Process the data
+                    if( Addon.DB:GetValue( 'Debug' ) ) then
+                        Addon.FRAMES:Debug( 'Addon.APP.AddMovablePort','Frame.OK:OnClick','Processing data...' );
                     end
                     for VarName,VarData in pairs( Data ) do
                         if( IsValid( VarName ) ) then
                             Addon.APP:SetVarValue( VarName,VarData.Value,true );
                         end
+                    end
+                    if( Addon.DB:GetValue( 'Debug' ) ) then
+                        Addon.FRAMES:Debug( 'Addon.APP.AddMovablePort','Frame.OK:OnClick','Data was processed' );
                     end
 
                     if( Addon.APP:GetValue( 'ReloadOnImport' ) ) then
@@ -397,6 +411,10 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     local Input = self:GetParent().Edit.Input
                     Input:HighlightText( 0 );
                     Input:SetFocus();
+                end
+
+                if( Addon.DB:GetValue( 'Debug' ) ) then
+                    Addon.FRAMES:Debug( 'Addon.APP.AddMovablePort','Frame.OK:OnClick','Routine ended' );
                 end
             end );
 
