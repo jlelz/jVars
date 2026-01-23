@@ -555,6 +555,36 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Step = 0.1,
                     Category = 'Character',
                 },
+                nameplateSelfBottomInset = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 0.0,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 1.0,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 0.25,
+                    Category = 'Character',
+                },
+                nameplateSelfTopInset = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 0.0,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 1.0,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 0.25,
+                    Category = 'Character',
+                },
                 NameplatePersonalShowAlways = {
                     Type = 'Toggle',
                     Category = 'Character',

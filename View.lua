@@ -170,6 +170,12 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Row.Sep = Addon.FRAMES:AddSeperator( Row );
                 Row.Sep:SetSize( Row:GetWidth(),1 );
                 Row.Sep:SetPoint( 'topleft',Row,'bottomleft',10,0 );
+                Row.Data = Data;
+
+                Row:SetScript( 'OnMouseDown',function( self )
+                    Addon:Dump( self.Data );
+                end );
+
                 return Row;
             end
 
