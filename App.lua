@@ -98,25 +98,28 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             local Value = Addon.APP:GetVarValue( 'findYourselfMode' );
 
             if( Value ) then
+                -- turn it on
                 if( GetCVar( 'findyourselfanywhere' ) ~= 1 ) then
                     SetCVar( 'findyourselfanywhere',1,nil,true );
                 end
-                if( GetCVar( 'findYourselfModeOutline' ) ~= 1 ) then -- https://warcraft.wiki.gg/wiki/Patch_11.0.0/API_changes
-                    SetCVar( 'findYourselfModeOutline',1,nil,true );
-                    SetCVar( 'findYourselfModeCircle',1 );
-                end
-                if( tonumber( Value ) == 2 ) then
-                    SetCVar( 'findYourselfModeCircle',0 );
+                -- circle 
+                if( Value == 0 ) then
+                    SetCVar( 'findYourselfModeOutline',0 ); -- outline
+                    SetCVar( 'findYourselfModeCircle',1 ); -- circle
+                -- circle and outline 
+                elseif( Value == 1 ) then
+                    SetCVar( 'findYourselfModeOutline',1 ); -- outline
+                    SetCVar( 'findYourselfModeCircle',1 ); -- circle
+
+                -- outline
+                elseif( Value == 2 ) then
+                    SetCVar( 'findYourselfModeOutline',1 ); -- outline
+                    SetCVar( 'findYourselfModeCircle',0 ); -- circle
                 end
             else
+                -- turn it off
                 if( GetCVar( 'findyourselfanywhere' ) ~= 0 ) then
                     SetCVar( 'findyourselfanywhere',0,nil,true );
-                end
-                if( GetCVar( 'findYourselfModeOutline' ) ~= 0 ) then -- https://warcraft.wiki.gg/wiki/Patch_11.0.0/API_changes
-                    SetCVar( 'findYourselfModeOutline',0,nil,true );
-                end
-                if( GetCVar( 'findYourselfModeCircle' ) ~= 0 ) then
-                    SetCVar( 'findYourselfModeCircle',0,nil,true );
                 end
             end
         end

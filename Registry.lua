@@ -1390,6 +1390,10 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Social',
                 },
+                chatBubblesRaid = {
+                    Type = 'Toggle',
+                    Category = 'Social',
+                },
                 chatMouseScroll = {
                     Type = 'Toggle',
                     Category = 'Social',
@@ -3515,7 +3519,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                             Description = 'High',
                         },
                     },
-                    Step = 1,
+                    Step = 50,
                     Category = 'Graphics',
                     Cascade = {
                         RefreshEnableRaidSettings = {
@@ -3533,7 +3537,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                             Description = 'High',
                         },
                     },
-                    Step = 1,
+                    Step = 50,
                     Category = 'Graphics',
                     Cascade = {
                         RefreshEnableRaidSettings = {
