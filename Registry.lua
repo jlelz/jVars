@@ -2324,6 +2324,14 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
+                combinedBags = {
+                    Type = 'Toggle',
+                    Category = 'Hud',
+                },
+                bankConfirmTabCleanUp = {
+                    Type = 'Toggle',
+                    Category = 'Hud',
+                },
                 maxFPS = {
                     Type = 'Range',
                     KeyPairs = {
