@@ -371,6 +371,70 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Character',
                 },
+                nameplateSize = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 1,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 5,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 1,
+                    Category = 'Hud',
+                },
+                nameplateDebuffPadding = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 0,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 50,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 1,
+                    Category = 'Hud',
+                },
+                nameplateStyle = {
+                    Type = 'Select',
+                    KeyPairs = {
+                        {
+                            Value = 0,
+                            Description = 'Modern',
+                        },
+                        {
+                            Value = 1,
+                            Description = 'Thin Bars',
+                        },
+                        {
+                            Value = 2,
+                            Description = 'Blocky Bars',
+                        },
+                        {
+                            Value = 3,
+                            Description = 'Clean Health',
+                        },
+                        {
+                            Value = 4,
+                            Description = 'Blocky Cast',
+                        },
+                        {
+                            Value = 5,
+                            Description = 'Legacy Red',
+                        },
+                    },
+                    Category = 'Character',
+                    Cascade = {
+                        RefreshFindYourself = {
+                        },
+                    },
+                },
                 nameplateOtherAtBase = {
                     Type = 'Range',
                     KeyPairs = {
@@ -569,6 +633,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     },
                     Step = 0.25,
                     Category = 'Character',
+                    Description = 'The inset from the bottom (in screen percent) that the self nameplate is clamped to.',
                 },
                 nameplateSelfTopInset = {
                     Type = 'Range',
@@ -584,6 +649,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     },
                     Step = 0.25,
                     Category = 'Character',
+                    Description = 'The inset from the top (in screen percent) that the self nameplate is clamped to.',
                 },
                 NameplatePersonalShowAlways = {
                     Type = 'Toggle',
@@ -1512,15 +1578,6 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Social',
                 },
-                remoteTextToSpeech = {
-                    Type = 'Toggle',
-                    Category = 'Social',
-                },
-                remoteTextToSpeechVoice = {
-                    Type = 'Select',
-                    KeyPairs = {},
-                    Category = 'Social',
-                },
                 removeChatDelay = {
                     Type = 'Toggle',
                     Category = 'Social',
@@ -1530,10 +1587,6 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Category = 'Social',
                 },
                 showToastConversation = {
-                    Type = 'Toggle',
-                    Category = 'Social',
-                },
-                textToSpeech = {
                     Type = 'Toggle',
                     Category = 'Social',
                 },

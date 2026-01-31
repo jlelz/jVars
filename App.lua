@@ -612,15 +612,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             -- Registry
             self.Registry = Addon.REG:GetRegistry();
 
-            local SelectedRemoteTextToSpeechVoice = tonumber( GetCVar( 'remoteTextToSpeechVoice' ) );
-            for Index,Voice in ipairs( C_VoiceChat.GetRemoteTtsVoices() ) do
-                local Row = {
-                    Value=Voice.voiceID,
-                    Description=VOICE_GENERIC_FORMAT:format( Voice.voiceID ),
-                };
-                table.insert( self.Registry[ string.lower( 'remoteTextToSpeechVoice' ) ].KeyPairs,Row );
-            end
-
             -- Framing
             self.Config = CreateFrame( 'Frame',self.Name);
             self.Config.name = self.Name;
