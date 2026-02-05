@@ -167,7 +167,7 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
                 Row.Value:SetPoint( 'topleft',Row.Default,'topright',15,7 );
 
-                Row.Sep = Addon.FRAMES:AddSeperator( Row );
+                Row.Sep = Addon.FRAMES:AddSeparator( Row,Handler.Theme.Separator );
                 Row.Sep:SetSize( Row:GetWidth(),1 );
                 Row.Sep:SetPoint( 'topleft',Row,'bottomleft',10,0 );
                 Row.Data = Data;

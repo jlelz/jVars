@@ -601,6 +601,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     b = 36/255,
                     a = .5,
                 },
+                Separator = {
+                    r = 255/255,
+                    g = 255/255,
+                    b = 255/255,
+                    a = .1,
+                },
                 HighLight = Addon.Theme[ self:GetValue( 'Theme' ) ],
                 Normal = Addon.Theme.Text,
             };
@@ -621,12 +627,14 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Heading.FieldHeight = self.FieldHeight;
             self.Heading.ColInset = self.ColInset;
 
+            --[[
             self.Heading.BookEnd = self.Heading:CreateTexture( nil,'ARTWORK',nil,3 );
             self.Heading.BookEnd:SetTexture( 'Interface\\azerite\\azeritecenterbggold' );
             self.Heading.BookEnd:SetSize( 65,self.Heading:GetHeight() );
             self.Heading.BookEnd:SetVertTile( true );
             self.Heading.BookEnd:SetPoint( 'topright',self.Heading,'topright',0,5 );
             self.Heading.BookEnd:SetAlpha( .5 );
+            ]]
 
             self.FilterBox = CreateFrame( 'EditBox',self.Name..'Filter',self.Config,'SearchBoxTemplate' );
             self.FilterBox:SetPoint( 'topleft',self.Heading,'topleft',15,( ( self.Heading:GetHeight() )*-1 )+25 );
@@ -703,11 +711,13 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Browser.Art = Addon.FRAMES:AddBackGround( self.Browser,self.Theme.Background );
             self.Browser.Art:SetAllPoints( self.Browser );
   
+            --[[
             self.Browser.BookEnd = self.Browser:CreateTexture( nil,'ARTWORK',nil,3 );
             self.Browser.BookEnd:SetTexture( 'Interface\\azerite\\azeritecenterbggold' );
             self.Browser.BookEnd:SetSize( 65,self.Browser:GetHeight() );
             self.Browser.BookEnd:SetPoint( 'topright',self.Browser,'topright',0,0 );
             self.Browser.BookEnd:SetAlpha( .5 );
+            ]]
 
             self.ScrollFrame = CreateFrame( 'ScrollFrame',self.Name..'ScrollFrame',self.Browser,'UIPanelScrollFrameTemplate' );
             self.ScrollFrame:SetAllPoints( self.Browser );
@@ -728,12 +738,14 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Footer.Art = Addon.FRAMES:AddBackGround( self.Footer,self.Theme.Background );
             self.Footer.Art:SetAllPoints( self.Footer );
 
+            --[[
             self.Footer.BookEnd = self.Browser:CreateTexture( nil,'ARTWORK',nil,3 );
             self.Footer.BookEnd:SetTexture( 'Interface\\azerite\\azeritecenterbggold' );
             self.Footer.BookEnd:SetSize( 65,self.Footer:GetHeight() );
             self.Footer.BookEnd:SetVertTile( true );
             self.Footer.BookEnd:SetPoint( 'topright',self.Footer,'topright',0,0 );
             self.Footer.BookEnd:SetAlpha( .5 );
+            ]]
 
             self.Stats = CreateFrame( 'Frame',self.Name..'FooterStats',self.Footer );
             self.Stats:SetSize( self.Footer:GetWidth()/2,self.Footer:GetHeight() );
