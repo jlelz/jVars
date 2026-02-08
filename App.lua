@@ -106,25 +106,27 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 if( Value == 0 ) then
                     SetCVar( 'findYourselfModeOutline',0 ); -- outline
                     SetCVar( 'findYourselfModeCircle',1 ); -- circle
+                    SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
+                    SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
                 -- circle and outline 
                 elseif( Value == 1 ) then
                     SetCVar( 'findYourselfModeOutline',1 ); -- outline
                     SetCVar( 'findYourselfModeCircle',1 ); -- circle
-                    SetCVar( 'graphicsOutlineMode',1 ); -- good, at least
-                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- good, at least
+                    SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
+                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
                 -- outline
                 elseif( Value == 2 ) then
                     SetCVar( 'findYourselfModeOutline',1 ); -- outline
                     SetCVar( 'findYourselfModeCircle',0 ); -- circle
-                    SetCVar( 'graphicsOutlineMode',1 ); -- good, at least
-                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- good, at least
+                    SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
+                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
                 end
             else
                 -- turn it off
                 if( GetCVar( 'findyourselfanywhere' ) ~= 0 ) then
                     SetCVar( 'findyourselfanywhere',0,nil,true );
-                    SetCVar( 'graphicsOutlineMode',0 ); -- good, at least
-                    SetCVar( 'raidGraphicsOutlineMode',0 ); -- good, at least
+                    SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
+                    SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
                 end
             end
         end
