@@ -628,27 +628,21 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Registry = Addon.REG:GetRegistry();
 
             -- Framing
-            self.Config = CreateFrame( 'Frame',self.Name);
+            self.Config = CreateFrame( 'Frame',self.Name,UIParent );
             self.Config.name = self.Name;
+            self.Config:SetShown( false );
+            self.Config:SetPoint( 'CENTER' );
+            self.Config:SetMovable( true );
+            self.Config:SetResizable( true );
+            self.Config:SetClampedToScreen( true );
+            self.Config:SetSize( 620,400 );
+
             self.Heading = CreateFrame( 'Frame',self.Name..'Heading',self.Config );
             self.Heading:SetPoint( 'topleft',self.Config,'topleft',10,-10 );
             self.Heading:SetSize( 610,100 );
             self.Heading.FieldHeight = self.FieldHeight;
             self.Heading.ColInset = self.ColInset;
-            self.Config:SetShown( false );
-            self.Config:SetPoint( 'CENTER' );
-            self.Config:EnableMouse( true );
-            self.Config:SetMovable( true );
-            self.Config:SetResizable( true );
-            self.Config:RegisterForDrag( 'LeftButton' );
-            self.Config:SetScript( 'OnDragStart',function( self )
-                self:StartMoving();
-            end );
-            self.Config:SetScript( 'OnDragStop',function( self )
-                self:StopMovingOrSizing();
-                self:SetUserPlaced( true );
-            end );
-            self.Config:SetSize( 620,400 );
+            self.Heading:SetResizable( true );
 
             --[[
             self.Heading.BookEnd = self.Heading:CreateTexture( nil,'ARTWORK',nil,3 );
@@ -662,6 +656,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.FilterBox = CreateFrame( 'EditBox',self.Name..'Filter',self.Config,'SearchBoxTemplate' );
             self.FilterBox:SetPoint( 'topleft',self.Heading,'topleft',15,( ( self.Heading:GetHeight() )*-1 )+25 );
             self.FilterBox:SetSize( 145,20 );
+            self.FilterBox:SetResizable( true );
             self.FilterBox.clearButton:Hide();
             self.FilterBox:ClearFocus();
             self.FilterBox:SetAutoFocus( false );
@@ -730,6 +725,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Browser = CreateFrame( 'Frame',self.Name..'Browser',self.Config );
             self.Browser:SetSize( self.Heading:GetWidth(),400 );
             self.Browser:SetPoint( 'topleft',self.Heading,'bottomleft',0,-10 );
+            self.Browser:SetResizable( true );
 
             self.Browser.Art = Addon.FRAMES:AddBackGround( self.Browser,self.Theme.Background );
             self.Browser.Art:SetAllPoints( self.Browser );
@@ -744,6 +740,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             self.ScrollFrame = CreateFrame( 'ScrollFrame',self.Name..'ScrollFrame',self.Browser,'UIPanelScrollFrameTemplate' );
             self.ScrollFrame:SetAllPoints( self.Browser );
+            self.ScrollFrame:SetResizable( true );
 
             self.ScrollChild = CreateFrame( 'Frame',self.Name..'ScrollChild' );
             self.ScrollFrame:SetScrollChild( self.ScrollChild );
@@ -752,21 +749,37 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Footer = CreateFrame( 'Frame',self.Name..'Footer',self.Config );
             self.Footer:SetSize( self.Browser:GetWidth(),50 );
             self.Footer:SetPoint( 'topleft',self.Browser,'bottomleft',0,-10 );
+            self.Footer:SetResizable( true );
 
-            self.Footer.Resizer = CreateFrame( 'Button',self.Name..'Resizer', self.Footer );
-            self.Footer.Resizer:EnableMouse( true );
-            self.Footer.Resizer:SetPoint( 'BOTTOMRIGHT' );
+            self.Footer.Resizer = CreateFrame( 'Button',self.Name..'Resizer', self.Config );
+            self.Footer.Resizer:SetPoint( 'bottomright',self.Footer,'bottomright' );
             self.Footer.Resizer:SetSize( 16,16 );
             self.Footer.Resizer:SetNormalTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down' );
             self.Footer.Resizer:SetHighlightTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight' );
             self.Footer.Resizer:SetPushedTexture( 'Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up' );
-            self.Footer.Resizer:SetScript( 'OnMouseDown',function( self )
-                Addon.APP.Config:StartSizing( 'BOTTOMRIGHT' );
-            end)
-            self.Footer.Resizer:SetScript( 'OnMouseUp',function( self )
-                Addon.APP.Config:StopMovingOrSizing( 'BOTTOMRIGHT' );
+
+            self.Footer.Resizer:EnableMouse( true );
+            self.Footer.Resizer:RegisterForDrag( 'LeftButton' );
+            self.Footer.Resizer:SetScript( 'OnDragStart',function( self )
+                self:GetParent():StartSizing( 'bottomright' );
+            end );
+            self.Footer.Resizer:SetScript( 'OnDragStop',function( self )
+                self:GetParent():StopMovingOrSizing();
                 local Point,RT,RP,x,y = Addon.APP.Config:GetPoint();
-            end)
+                local Data = {
+                    Point = Point,
+                    RT = RT,
+                    RP = RP,
+                    x = x,
+                    y = y,
+                };
+            end );
+
+            -- Make frame draggable by its title
+            self.Config:EnableMouse( true );
+            self.Config:RegisterForDrag( 'LeftButton' );
+            self.Config:SetScript( 'OnDragStart',function( self ) self:StartMoving() end );
+            self.Config:SetScript( 'OnDragStop',function( self ) self:StopMovingOrSizing() end );
 
             self.Footer.Art = Addon.FRAMES:AddBackGround( self.Footer,self.Theme.Background );
             self.Footer.Art:SetAllPoints( self.Footer );
@@ -783,10 +796,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Stats = CreateFrame( 'Frame',self.Name..'FooterStats',self.Footer );
             self.Stats:SetSize( self.Footer:GetWidth()/2,self.Footer:GetHeight() );
             self.Stats:SetPoint( 'topright',self.Footer,'topright',0,0 );
+            self.Stats:SetResizable( true );
 
             self.Controls = CreateFrame( 'Frame',self.Name..'FooterConfig',self.Footer );
             self.Controls:SetSize( self.Footer:GetWidth()/2,self.Footer:GetHeight() );
             self.Controls:SetPoint( 'topright',self.Stats,'topleft',0,0 );
+            self.Controls:SetResizable( true );
 
             local MovingPort = Addon.APP:AddMovablePort( self.Browser );
             MovingPort.Edit.Input:SetScript( 'OnEditFocusLost',function( self )
