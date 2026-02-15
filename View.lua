@@ -9,7 +9,7 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.VIEW.GetModified = function( self,Data,Handler )
             return Handler:GetModified( Data,Handler );
         end
-        Addon.VIEW.GetStats = function( self,Data,Handler )
+        Addon.VIEW.GetStats = function( self,Data,Handler,Theme )
             local Stats = {
                 Locked = 0,
                 Modified = 0,
@@ -25,19 +25,19 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Stats.Total = Stats.Total+1;
             end
 
-            self.AddRow = function( self,Data,Handler )
+            self.AddRow = function( self,Data,Handler,Theme )
 
                 local Row = CreateFrame( 'Frame',Handler.Stats:GetName()..'StatsRow',Handler.Stats );
 
                 Row.LockedLabel = Addon.FRAMES:AddLocked( { DisplayText = 'Locked' },Row );
-                Row.LockedValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Locked },Row,Handler.Theme.Text );
+                Row.LockedValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Locked },Row );
 
-                Row.ModifiedLabel = Addon.FRAMES:AddLabel( { DisplayText = 'Modified,' },Row,Handler.Theme.Foreground );
-                Row.ModifiedValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Modified },Row,Handler.Theme.Text );
+                local Color = Theme.Text.Colors.Highlight;
+                Row.ModifiedLabel = Addon.FRAMES:AddLabel( { DisplayText = 'Modified,' },Row,Color );
+                Row.ModifiedValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Modified },Row,Color );
 
-                Row.TotalLabel = Addon.FRAMES:AddLabel( { DisplayText = 'Total,' },Row,Handler.Theme.Text );
-                Row.TotalValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Total },Row,Handler.Theme.Text );
-
+                Row.TotalLabel = Addon.FRAMES:AddLabel( { DisplayText = 'Total,' },Row );
+                Row.TotalValue = Addon.FRAMES:AddLabel( { DisplayText = Data.Total },Row );
 
                 Row.LockedLabel:SetPoint( 'topright',Handler.Stats,'bottomright',-10,15 );
                 Row.LockedValue:SetPoint( 'topright',Row.LockedLabel,'topleft',0,0 );
@@ -62,38 +62,45 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Locked = Stats.Locked,
                 Modified = Stats.Modified,
                 Total = Stats.Total
-            },Handler );
+            },Handler,Theme );
         end
 
-        Addon.VIEW.RegisterList = function( self,Data,Handler )
+        Addon.VIEW.RegisterList = function( self,Data,Handler,Theme )
 
             Handler:HideAll();
             Handler.RegisteredFrames = {};
 
-            self.AddRow = function( Data,Parent,Handler )
+            local Adjusted = false;
+            self.AddRow = function( Data,Parent,Handler,Theme )
 
                 local Row = CreateFrame( 'Frame',string.lower( Data.Name ),Parent );
+                local Color = Theme.Text.Colors.Default;
 
                 Row:SetSize( Parent:GetWidth(),30 );
 
                 if( Addon.VIEW:GetModified( Data,Handler ) ) then
+                    Adjusted = true;
+                    Color = Theme.Text.Colors.Highlight;
 
-                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Handler.Theme.Foreground );
+                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Color );
 
                     local ScopeData = Data;
                     ScopeData.DisplayText = Data.Scope;
-                    Row.Scope = Addon.FRAMES:AddLabel( ScopeData,Row,Handler.Theme.Foreground );
+                    Row.Scope = Addon.FRAMES:AddLabel( ScopeData,Row,Color );
 
                     local CategoryData = Data;
                     CategoryData.DisplayText = Data.Category;
-                    Row.Category = Addon.FRAMES:AddLabel( CategoryData,Row,Handler.Theme.Foreground );
+                    Row.Category = Addon.FRAMES:AddLabel( CategoryData,Row,Color );
 
                     local DefaultData = Data;
                     DefaultData.DisplayText = Data.DefaultValue;
-                    Row.Default = Addon.FRAMES:AddLabel( DefaultData,Row,Handler.Theme.Foreground );
-                    Row.Adjust = Addon.FRAMES:AddLabel( Data,Row,Handler.Theme.Foreground );
+                    Row.Default = Addon.FRAMES:AddLabel( DefaultData,Row,Color );
+                    Row.Adjust = Addon.FRAMES:AddLabel( Data,Row,Color );
+
                 elseif( Data.Scope == 'Locked' ) then
-                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Handler.Theme.Foreground );
+                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Color );
+                    Adjusted = false;
+                    Color = Theme.Text.Colors.Error;
 
                     local ScopeData = Data;
                     ScopeData.DisplayText = Data.Scope;
@@ -108,20 +115,21 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Row.Default = Addon.FRAMES:AddLocked( DefaultData,Row );
                     Row.Adjust = Addon.FRAMES:AddLocked( Data,Row );
                 else
-                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Handler.Theme.Text );
+                    Row.Label = Addon.FRAMES:AddTip( Data,Row,Color );
+                    Adjusted = false;
 
                     local ScopeData = Data;
                     ScopeData.DisplayText = Data.Scope;
-                    Row.Scope = Addon.FRAMES:AddLabel( ScopeData,Row,Handler.Theme.Text );
+                    Row.Scope = Addon.FRAMES:AddLabel( ScopeData,Row );
 
                     local CategoryData = Data;
                     CategoryData.DisplayText = Data.Category;
-                    Row.Category = Addon.FRAMES:AddLabel( CategoryData,Row,Handler.Theme.Text );
+                    Row.Category = Addon.FRAMES:AddLabel( CategoryData,Row );
 
                     local Default = Data;
                     Default.DisplayText = Data.DefaultValue;
-                    Row.Default = Addon.FRAMES:AddLabel( Default,Row,Handler.Theme.Text );
-                    Row.Adjust = Addon.FRAMES:AddLabel( Data,Row,Handler.Theme.Text );
+                    Row.Default = Addon.FRAMES:AddLabel( Default,Row );
+                    Row.Adjust = Addon.FRAMES:AddLabel( Data,Row );
                 end
 
                 -- CVar
@@ -145,6 +153,7 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Row.Default:SetJustifyH( 'left' );
 
                 -- Adjust
+                Color = Theme.Text.Colors.Default;
                 if( Data.Type == 'Toggle' ) then
                     Row.Value = Addon.FRAMES:AddVarToggle( Data,Row,Handler );
                 elseif( Data.Type == 'Range' ) then
@@ -158,17 +167,17 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                             --print( 'Set',Data.Name,Addon:SliderRound( Row.Value:GetValue(),Data.Step ) )
                             return Handler:SetVarValue( Data.Name,Addon:SliderRound( Row.Value:GetValue(),Data.Step ) );
                         end,
-                    },Handler.Theme.Text );
+                    },Color );
                 elseif( Data.Type == 'Select' ) then
-                    Row.Value = Addon.FRAMES:AddSelect( Data,Row,Handler );
+                    Row.Value = Addon.FRAMES:AddSelect( Data,Row,Handler,Color );
                 elseif( Data.Type == 'Edit' ) then
                     Row.Value = Addon.FRAMES:AddEdit( Data,Row,Handler );
                     Row.Value:SetSize( 25,Addon.APP.Heading.FieldHeight );
                 end
                 Row.Value:SetPoint( 'topleft',Row.Default,'topright',15,7 );
 
-                Row.Sep = Addon.FRAMES:AddSeparator( Row,Handler.Theme.Separator );
-                Row.Sep:SetSize( Row:GetWidth(),1 );
+                Row.Sep = Addon.FRAMES:AddSeparator( Row );
+                Row.Sep:SetSize( Row:GetWidth()-20,1 );
                 Row.Sep:SetPoint( 'topleft',Row,'bottomleft',10,0 );
                 Row.Data = Data;
 
@@ -184,7 +193,7 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
             local RowElements = {};
             for VarName,VarData in Addon:Sort( Data ) do
 
-                local Row = self.AddRow( VarData,Handler.ScrollChild,Handler );
+                local Row = self.AddRow( VarData,Handler.ScrollChild,Handler,Theme );
 
                 if( not( #RowElements > 0 ) ) then
                     Row:SetPoint( 'topleft',Handler.ScrollChild,'topleft',X,Y );

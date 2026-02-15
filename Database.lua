@@ -21,7 +21,9 @@ Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
                 ReloadOnImport = false,
                 Refresh = true,
                 Vars = {},
-                Theme = 'Sex',
+                Position = {
+                },
+                Scale = 1,
             };
             -- Flag missing C_Console.GetAllCommands vars
             for VarName,VarData in pairs( Addon.REG:GetRegistry() ) do
