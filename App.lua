@@ -712,6 +712,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Addon.APP.Config:SetUserPlaced( true );
             end );
 
+            -- Frame closing
+            local FrameClose = CreateFrame( 'EditBox',nil,self.Config,'InputBoxTemplate' );
+            FrameClose:SetScript( 'OnEscapePressed',function( self )
+                Addon.APP.Config:Hide();
+            end );
+
             self.Heading = CreateFrame( 'Frame',self.Name..'Heading',self.Config );
             self.Heading:SetPoint( 'topleft',self.Config,'topleft' );
             self.Heading:SetSize( self.Config:GetWidth(),100 );
