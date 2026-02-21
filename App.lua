@@ -347,7 +347,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Frame.Edit.Input:SetSize( Frame:GetWidth()-25,Frame:GetHeight()-25 );
             --Frame.Edit.Input:SetFocus();
             --Frame.Edit.Input:Click();
-            Frame.Edit.Input:SetScript( 'OnKeyDown',function( self,Key )
+            Frame.Edit.Input:HookScript( 'OnKeyDown',function( self,Key )
                 if( Addon:Minify( Key ):find( 'escape' ) ) then
                     Frame:Hide();
                 end
@@ -359,7 +359,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             },Frame )
             Frame.Clear:SetPoint( 'bottomleft',10,5 );
             Frame.Clear:SetWidth( 50 );
-            Frame.Clear:SetScript( 'OnClick',function( self )
+            Frame.Clear:HookScript( 'OnClick',function( self )
                 local Input = self:GetParent().Edit.Input;
                 local Value = Input:GetText();
                 if( Value ) then
@@ -373,7 +373,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             },Frame )
             Frame.Ok:SetPoint( 'topleft',Frame.Clear,'topright',10,0 );
             Frame.Ok:SetWidth( 50 );
-            Frame.Ok:SetScript( 'OnClick',function( self )
+            Frame.Ok:HookScript( 'OnClick',function( self )
                 local Value = self:GetParent().Edit.Input:GetText();
                 if( Value ) then
 
@@ -431,7 +431,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             },Frame )
             Frame.Close:SetPoint( 'topleft',Frame.Ok,'topright',10,0 );
             Frame.Close:SetWidth( 50 );
-            Frame.Close:SetScript( 'OnClick',function( self )
+            Frame.Close:HookScript( 'OnClick',function( self )
                 self:GetParent():Hide();
             end );
             Frame:Hide();
@@ -698,7 +698,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             end );
 
             -- Frame moving
-            self.Config:SetScript( 'OnDragStop',function( self )
+            self.Config:HookScript( 'OnDragStop',function( self )
                 Addon.APP.Config:StopMovingOrSizing();
                 local Point,RT,RP,x,y = Addon.APP.Config:GetPoint();
                 local Data = {
@@ -714,7 +714,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             -- Frame closing
             local FrameClose = CreateFrame( 'EditBox',nil,self.Config,'InputBoxTemplate' );
-            FrameClose:SetScript( 'OnEscapePressed',function( self )
+            FrameClose:HookScript( 'OnEscapePressed',function( self )
                 Addon.APP.Config:Hide();
             end );
 
@@ -726,7 +726,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             self.FilterBox = Addon.FRAMES:AddSearch( { Name = self.Name },self.Heading );
             self.FilterBox:SetPoint( 'topleft',self.Heading,'topleft',15,( ( self.Heading:GetHeight() )*-1 )+25 );
-            self.FilterBox:SetScript( 'OnEscapePressed',function( self )
+            self.FilterBox:HookScript( 'OnEscapePressed',function( self )
                 if( InCombatLockdown() ) then
                     return;
                 end
@@ -738,7 +738,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 self:SetText( '' );
                 Addon.APP:ShowAll();
             end );
-            self.FilterBox:SetScript( 'OnEditFocusGained',function( self ) 
+            self.FilterBox:HookScript( 'OnEditFocusGained',function( self ) 
                 if( InCombatLockdown() ) then
                     return;
                 end
@@ -748,7 +748,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
                 self:HighlightText();
             end );
-            self.FilterBox:SetScript( 'OnTextChanged',function( self )
+            self.FilterBox:HookScript( 'OnTextChanged',function( self )
                 if( InCombatLockdown() ) then
                     return;
                 end
@@ -839,7 +839,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Controls:SetPoint( 'topright',self.Stats,'topleft',0,0 );
 
             local MovingPort = Addon.APP:AddMovablePort( self.Browser );
-            MovingPort.Edit.Input:SetScript( 'OnEditFocusLost',function( self )
+            MovingPort.Edit.Input:HookScript( 'OnEditFocusLost',function( self )
                 if( Addon.DB:GetValue( 'Debug' ) ) then
                     Addon.FRAMES:Debug( 'MovingPort.Edit.Input','OnEditFocusLost','setting focus....' )
                 end
