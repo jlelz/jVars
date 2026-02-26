@@ -4,9 +4,6 @@ Addon.APP = CreateFrame( 'Frame' );
 Addon.APP:RegisterEvent( 'ADDON_LOADED' );
 Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
     if( AddonName == 'jVars' ) then
-        if( InCombatLockdown() ) then
-            return;
-        end
 
         --
         --  Set cvar setting
@@ -15,9 +12,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         --  @param  string  Value
         --  @return bool
         Addon.APP.SetVarValue = function( self,Index,Value,Importing )
-            if( InCombatLockdown() ) then
-                return;
-            end
             local Result = Addon.DB:SetVarValue( Index,Value );
             if( Result ) then
                 self:Query();
@@ -515,10 +509,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         end
 
         Addon.APP.Filter = function( self,SearchQuery )
-            if( InCombatLockdown() ) then
-                return;
-            end
-
             local AllData = {};
             for VarName,VarData in pairs( self.Registry ) do
 
@@ -579,9 +569,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         end
 
         Addon.APP.Query = function( self )
-            if( InCombatLockdown() ) then
-                return;
-            end
             local SearchQuery = self.FilterBox:GetText();
             local FilteredList = Addon.APP:Filter( SearchQuery );
             Addon.VIEW:RegisterList( FilteredList,Addon.APP,Addon.Theme );
@@ -601,10 +588,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         --
         --  @return void
         Addon.APP.Init = function( self )
-            if( InCombatLockdown() ) then
-                return;
-            end
-
             -- Window
             self.Name = AddonName;
             self.RowHeight = 35;    -- Each entire row
@@ -658,9 +641,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             },Addon.Theme.Text.Colors.Default );
 
             LibStub( 'AceHook-3.0' ):SecureHookScript( self.Config,'OnMouseWheel',function( self,Value )
-                if( InCombatLockdown() ) then
-                    return;
-                end
                 local CurrentValue = tonumber( Addon.APP.Config:GetScale() );
                 if( not ( CurrentValue > 0 ) ) then
                     return;
@@ -727,9 +707,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.FilterBox = Addon.FRAMES:AddSearch( { Name = self.Name },self.Heading );
             self.FilterBox:SetPoint( 'topleft',self.Heading,'topleft',15,( ( self.Heading:GetHeight() )*-1 )+25 );
             self.FilterBox:HookScript( 'OnEscapePressed',function( self )
-                if( InCombatLockdown() ) then
-                    return;
-                end
                 self:SetAutoFocus( false );
                 if( self.Instructions ) then
                     self.Instructions:Show();
@@ -739,9 +716,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 Addon.APP:ShowAll();
             end );
             self.FilterBox:HookScript( 'OnEditFocusGained',function( self ) 
-                if( InCombatLockdown() ) then
-                    return;
-                end
                 self:SetAutoFocus( true );
                 if( self.Instructions ) then
                     self.Instructions:Hide();
@@ -749,9 +723,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 self:HighlightText();
             end );
             self.FilterBox:HookScript( 'OnTextChanged',function( self )
-                if( InCombatLockdown() ) then
-                    return;
-                end
                 if( not Addon.APP.Config:IsVisible() ) then
                     return;
                 end
@@ -1030,6 +1001,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             SLASH_JVARS1,SLASH_JVARS2,SLASH_JVARS3 = '/jv','/vars','/jvars';
             SlashCmdList['JVARS'] = function( Msg,EditBox )
 
+                if( InCombatLockdown() ) then
+                    Addon.FRAMES:Error( 'You are in combat' );
+                end
                 self.Config:SetShown( true );
                 --[[
                 if( InterfaceOptionsFrame_OpenToCategory ) then
