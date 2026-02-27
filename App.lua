@@ -1002,7 +1002,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             SlashCmdList['JVARS'] = function( Msg,EditBox )
 
                 if( InCombatLockdown() ) then
-                    Addon.FRAMES:Error( 'You are in combat' );
+                    Addon.FRAMES:Error( 'You are in combat' );return;
                 end
                 self.Config:SetShown( true );
                 --[[
