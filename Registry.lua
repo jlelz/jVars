@@ -1078,6 +1078,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     },
                     Step = .2,
                     Category = 'Hud',
+                    Description = 'Controls the duration (in seconds) of the alpha animation (fade in/out) for the world map.',
                 },
                 --[[
                 useCompactPartyFrames = {
@@ -2265,7 +2266,7 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Range',
                     KeyPairs = {
                         Low = {
-                            Value = 0.6,
+                            Value = 0.4,
                             Description = 'Low',
                         },
                         High = {

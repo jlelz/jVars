@@ -339,8 +339,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Frame.Edit:SetPoint( 'center',Frame,'center' );
             Frame.Edit:SetSize( Frame:GetWidth()-25,Frame:GetHeight()-25 );
             Frame.Edit.Input:SetSize( Frame:GetWidth()-25,Frame:GetHeight()-25 );
-            --Frame.Edit.Input:SetFocus();
-            --Frame.Edit.Input:Click();
             Frame.Edit.Input:HookScript( 'OnKeyDown',function( self,Key )
                 if( Addon:Minify( Key ):find( 'escape' ) ) then
                     Frame:Hide();
@@ -714,6 +712,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 self:ClearFocus();
                 self:SetText( '' );
                 Addon.APP:ShowAll();
+                
+                Addon.APP:Query();
             end );
             self.FilterBox:HookScript( 'OnEditFocusGained',function( self ) 
                 self:SetAutoFocus( true );
@@ -810,11 +810,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Controls:SetPoint( 'topright',self.Stats,'topleft',0,0 );
 
             local MovingPort = Addon.APP:AddMovablePort( self.Browser );
-            MovingPort.Edit.Input:HookScript( 'OnEditFocusLost',function( self )
-                if( Addon.DB:GetValue( 'Debug' ) ) then
-                    Addon.FRAMES:Debug( 'MovingPort.Edit.Input','OnEditFocusLost','setting focus....' )
-                end
-                self:SetFocus();
+            MovingPort:SetScript( 'OnShow',function( self )
+                self.Edit.Input:SetFocus();
             end );
 
             local RefreshData = {
@@ -1038,13 +1035,11 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         end
         
         Addon.FRAMES:Notify( 'Prepping...please wait' );
-        C_Timer.After( 15,function()
-            Addon.DB:Init();
-            Addon.APP:Init();
-            if( Addon.APP:GetValue( 'Refresh' ) ) then
-                Addon.APP:Refresh();
-            end
-        end );
+        Addon.DB:Init();
+        Addon.APP:Init();
+        if( Addon.APP:GetValue( 'Refresh' ) ) then
+            Addon.APP:Refresh();
+        end
 
         self:UnregisterEvent( 'ADDON_LOADED' );
     end
