@@ -731,6 +731,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
                 Addon.APP:Query();
             end );
+            self.FilterBox.clearButton:HookScript( 'OnClick',function()
+                Addon.APP:Query();
+            end );
 
             self.Heading.Name = Addon.FRAMES:AddLabel( { DisplayText = 'Name' },self.Heading );
             self.Heading.Name:SetPoint( 'topleft',self.Heading,'topleft',self.Heading.ColInset,( ( self.Heading:GetHeight() )*-1 )+20 );
