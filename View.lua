@@ -194,20 +194,10 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
             for VarName,VarData in Addon:Sort( Data ) do
 
                 local Row = self.AddRow( VarData,Handler.ScrollChild,Handler,Theme );
+                
+                Row:SetPoint( 'topleft',Handler.ScrollChild,'topleft',X,Y );
 
-                if( not( #RowElements > 0 ) ) then
-                    Row:SetPoint( 'topleft',Handler.ScrollChild,'topleft',X,Y );
-
-                    RowElements[ Iterator ] = Row:GetName();
-
-                else
-                    Row:SetPoint( 'topleft',Handler.ScrollChild,'topleft',X,Y );
-
-                    RowElements[ Iterator ] = Row:GetName();
-
-                end
-
-                Iterator = Iterator + 1;
+                RowElements[ Iterator ] = Row:GetName(); Iterator = Iterator + 1;
 
                 local FrameData = {
                     Name        = VarName,
