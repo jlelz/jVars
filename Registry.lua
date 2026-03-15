@@ -816,6 +816,21 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                 floatingCombatTextAuraFade = {
                 },
                 ]]
+                Turnspeed = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 0,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 2500,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 20,
+                    Category = 'Character',
+                },
                 GamePadEmulateEsc = {
                     Type = 'Select',
                     KeyPairs = {
