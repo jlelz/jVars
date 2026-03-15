@@ -155,26 +155,30 @@ Addon.VIEW:SetScript( 'OnEvent',function( self,Event,AddonName )
                 -- Adjust
                 Color = Theme.Text.Colors.Default;
                 if( Data.Type == 'Toggle' ) then
-                    Row.Value = Addon.FRAMES:AddVarToggle( Data,Row,Handler );
+                    Row.Widget = Addon.FRAMES:AddVarToggle( Data,Row,Handler );
                 elseif( Data.Type == 'Range' ) then
-                    Row.Value = Addon.FRAMES:AddRange( Data,Row,{
+                    Row.Widget = Addon.FRAMES:AddRange( Data,Row,{
                         -- AddRange initialization calls this
                         Get = function()
                             return Handler:GetVarValue( Data.Name );
                         end,
                         -- AddRange:OnValueChanged calls this
                         Set = function( Index,Value )
-                            --print( 'Set',Data.Name,Addon:SliderRound( Row.Value:GetValue(),Data.Step ) )
-                            return Handler:SetVarValue( Data.Name,Addon:SliderRound( Row.Value:GetValue(),Data.Step ) );
+                            local RoundedVal = Addon:SliderRound( Row.Widget:GetValue(),Data.Step );
+                            local ReturnVal = Handler:SetVarValue( Data.Name,RoundedVal );
+                            if( Handler:GetValue( 'Debug' ) ) then
+                                Addon.FRAMES:Debug( 'Rounded value entered from',Value,'to',RoundedVal );
+                            end
+                            return ReturnVal;
                         end,
                     },Color );
                 elseif( Data.Type == 'Select' ) then
-                    Row.Value = Addon.FRAMES:AddSelect( Data,Row,Handler,Color );
+                    Row.Widget = Addon.FRAMES:AddSelect( Data,Row,Handler,Color );
                 elseif( Data.Type == 'Edit' ) then
-                    Row.Value = Addon.FRAMES:AddEdit( Data,Row,Handler );
-                    Row.Value:SetSize( 25,Addon.APP.Heading.FieldHeight );
+                    Row.Widget = Addon.FRAMES:AddEdit( Data,Row,Handler );
+                    Row.Widget:SetSize( 25,Addon.APP.Heading.FieldHeight );
                 end
-                Row.Value:SetPoint( 'topleft',Row.Default,'topright',15,7 );
+                Row.Widget:SetPoint( 'topleft',Row.Default,'topright',15,7 );
 
                 Row.Sep = Addon.FRAMES:AddSeparator( Row );
                 Row.Sep:SetSize( Row:GetWidth()-20,1 );
