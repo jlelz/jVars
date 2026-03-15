@@ -2281,16 +2281,20 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Range',
                     KeyPairs = {
                         Low = {
-                            Value = 0.4,
+                            Value = 0.63,
                             Description = 'Low',
                         },
                         High = {
-                            Value = 1.0,
+                            Value = 1.49,
                             Description = 'High',
                         },
                     },
-                    Step = 0.1,
+                    Step = 0.01,
                     Category = 'Hud',
+                    Cascade = {
+                        RefreshScale = {
+                        },
+                    },
                 },
                 violencelevel = {
                     Type = 'Range',

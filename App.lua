@@ -77,6 +77,16 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             return Addon.DB:GetValue( Index );
         end
 
+        Addon.APP.RefreshScale = function( self )
+            local Value = Addon.APP:GetVarValue( 'uiScale' );
+            if( Value ) then
+                SetCVar( 'useUiScale',1 );
+            else
+                SetCVar( 'useUiScale',0 );
+            end
+            Addon.FRAMES:Warn( 'Blizzard sets the scale in the UI dynamically based on UIParent, which is parent to whatever scale you choose so your value may get ajusted ');
+        end
+
         Addon.APP.RefreshConsole = function( self )
             local Value = Addon.APP:GetVarValue( 'ConsoleKey' );
             if( Value ) then
