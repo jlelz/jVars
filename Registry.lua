@@ -2281,15 +2281,15 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Range',
                     KeyPairs = {
                         Low = {
-                            Value = 0.63,
+                            Value = 0.649,
                             Description = 'Low',
                         },
                         High = {
-                            Value = 1.49,
+                            Value = 1.149,
                             Description = 'High',
                         },
                     },
-                    Step = 0.01,
+                    Step = 0.00000000000001,
                     Category = 'Hud',
                     Cascade = {
                         RefreshScale = {
