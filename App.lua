@@ -936,7 +936,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     local Dict = Addon.DICT:GetDictionary()[ Key ];
 
                     if( Value ~= nil ) then
-                        if( Dict and Dict.DefaultValue ~= Value ) then
+                        if( Dict ) then
                             Export = Export..Dict.Key..':::'..Value..',';
                         end
                     end
