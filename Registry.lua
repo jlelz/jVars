@@ -293,10 +293,6 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
-                useUiScale = {
-                    Type = 'Toggle',
-                    Category = 'Hud',
-                },
                 countdownForCooldowns = {
                     Type = 'Toggle',
                     Category = 'Character',
@@ -2274,6 +2270,10 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Category = 'System',
                 },
                 timeMgrUseLocalTime = {
+                    Type = 'Toggle',
+                    Category = 'Hud',
+                },
+                useUiScale = {
                     Type = 'Toggle',
                     Category = 'Hud',
                 },

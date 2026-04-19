@@ -16,14 +16,11 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             if( Result ) then
                 self:Query();
                 local Updated = SetCVar( Index,Value,nil,true );
-                if( Updated ) then
-
-                    local VarData = self.Registry[ Addon:Minify( Index ) ];
-                    if( VarData and VarData.Cascade ) then
-                        for Handling,_ in pairs( VarData.Cascade ) do
-                            if( Addon.APP[Handling] ) then
-                                Addon.APP[Handling]( Index,VarData,true );
-                            end
+                local VarData = self.Registry[ Addon:Minify( Index ) ];
+                if( VarData and VarData.Cascade ) then
+                    for Handling,_ in pairs( VarData.Cascade ) do
+                        if( Addon.APP[Handling] ) then
+                            Addon.APP[Handling]( Index,VarData,true );
                         end
                     end
                 end
@@ -43,10 +40,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 if( Addon.DB:GetValue( 'Debug' ) ) then
                     Addon:Dump( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ] );
                 end
-
-                return true;
             end
-            return false;
         end
 
         --
@@ -172,7 +166,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.APP.RefreshShowPersonalNamePlate = function( self )
             local Value = Addon.APP:GetVarValue( 'NameplatePersonalShowAlways' );
 
-            if( Value ) then
+            if( tonumber( Value ) > 0 ) then
                 if( GetCVar( 'UnitNameOwn' ) ~= 1 ) then
                     SetCVar( 'UnitNameOwn',1,nil,true );
                 end
@@ -186,7 +180,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.APP.RefreshShowAllNamePlates = function( self )
             local Value = Addon.APP:GetVarValue( 'nameplateShowAll' );
 
-            if( Value ) then
+            if( tonumber( Value ) > 0 ) then
                 if( GetCVar( 'UnitNameOwn' ) ~= 1 ) then
                     SetCVar( 'UnitNameOwn',1,nil,true );
                 end
@@ -1034,6 +1028,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                             if( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ] ) then
                                 if( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary ) then
                                     Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary.CurrentValue = GetCVar( Index );
+                                    Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Value = GetCVar( Index );
                                 end
                             end
                             if( Addon.DB:GetValue( 'Debug' ) ) then
