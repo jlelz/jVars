@@ -3019,6 +3019,26 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
+                vsync = {
+                    Type = 'Toggle',
+                    Category = 'Graphics',
+                },
+                gxMaxFrameLatency = {
+                    Type = 'Select',
+                    KeyPairs = {
+                        {
+                            Value = 2,
+                            Description = 'Less',
+                        },
+                        {
+                            Value = 3,
+                            Description = 'More',
+                        },
+                    },
+                    Category = 'Graphics',
+                    Cascade = {
+                    },
+                },
                 allowCompareWithToggle = {
                     Type = 'Toggle',
                     Category = 'Hud',
@@ -3125,6 +3145,30 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     },
                     Step = 0.1,
                     Category = 'Graphics',
+                },
+                shadowMode = {
+                    Type = 'Select',
+                    KeyPairs = {
+                        {
+                            Value = 0,
+                            Description = 'Off',
+                        },
+                        {
+                            Value = 1,
+                            Description = 'Low',
+                        },
+                        {
+                            Value = 2,
+                            Description = 'Good',
+                        },
+                        {
+                            Value = 3,
+                            Description = 'High',
+                        },
+                    },
+                    Category = 'Graphics',
+                    Cascade = {
+                    },
                 },
                 raidGraphicsShadowQuality = {
                     Type = 'Select',
