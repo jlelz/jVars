@@ -14,8 +14,10 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.APP.SetVarValue = function( self,Index,Value,Importing )
             local Result = Addon.DB:SetVarValue( Index,Value );
             if( Result ) then
-                self:Query();
-                local Updated = SetCVar( Index,Value,nil,true );
+                if( not Importing ) then 
+                    self:Query(); 
+                end
+                local Updated = C_CVar.SetCVar( Index,Value );
                 local VarData = self.Registry[ Addon:Minify( Index ) ];
                 if( VarData and VarData.Cascade ) then
                     for Handling,_ in pairs( VarData.Cascade ) do
@@ -74,9 +76,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.APP.RefreshScale = function( self )
             local Value = Addon.APP:GetVarValue( 'uiScale' );
             if( Value ) then
-                SetCVar( 'useUiScale',1 );
+                C_CVar.SetCVar( 'useUiScale',1 );
             else
-                SetCVar( 'useUiScale',0 );
+                C_CVar.SetCVar( 'useUiScale',0 );
             end
             Addon.FRAMES:Warn( 'Blizzard sets the scale in the UI dynamically based on UIParent, which is parent to whatever scale you choose so your value may get ajusted ');
         end
@@ -97,34 +99,34 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             if( Value ) then
                 -- turn it on
-                if( GetCVar( 'findyourselfanywhere' ) ~= 1 ) then
-                    SetCVar( 'findyourselfanywhere',1,nil,true );
+                if( C_CVar.GetCVar( 'findyourselfanywhere' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'findyourselfanywhere',1,nil,true );
                 end
                 -- circle 
-                if( Value == 0 ) then
-                    SetCVar( 'findYourselfModeOutline',0 ); -- outline
-                    SetCVar( 'findYourselfModeCircle',1 ); -- circle
-                    SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
-                    SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
+                if( tonumber( Value ) == 0 ) then
+                    C_CVar.SetCVar( 'findYourselfModeOutline',0 ); -- outline
+                    C_CVar.SetCVar( 'findYourselfModeCircle',1 ); -- circle
+                    C_CVar.SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
+                    C_CVar.SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
                 -- circle and outline 
-                elseif( Value == 1 ) then
-                    SetCVar( 'findYourselfModeOutline',1 ); -- outline
-                    SetCVar( 'findYourselfModeCircle',1 ); -- circle
-                    SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
-                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
+                elseif( tonumber( Value ) == 1 ) then
+                    C_CVar.SetCVar( 'findYourselfModeOutline',1 ); -- outline
+                    C_CVar.SetCVar( 'findYourselfModeCircle',1 ); -- circle
+                    C_CVar.SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
+                    C_CVar.SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
                 -- outline
-                elseif( Value == 2 ) then
-                    SetCVar( 'findYourselfModeOutline',1 ); -- outline
-                    SetCVar( 'findYourselfModeCircle',0 ); -- circle
-                    SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
-                    SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
+                elseif( tonumber( Value ) == 2 ) then
+                    C_CVar.SetCVar( 'findYourselfModeOutline',1 ); -- outline
+                    C_CVar.SetCVar( 'findYourselfModeCircle',0 ); -- circle
+                    C_CVar.SetCVar( 'graphicsOutlineMode',1 ); -- turn on outline
+                    C_CVar.SetCVar( 'raidGraphicsOutlineMode',1 ); -- turn on outline
                 end
             else
                 -- turn it off
-                if( GetCVar( 'findyourselfanywhere' ) ~= 0 ) then
-                    SetCVar( 'findyourselfanywhere',0,nil,true );
-                    SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
-                    SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
+                if( C_CVar.GetCVar( 'findyourselfanywhere' ) ~= 0 ) then
+                    C_CVar.SetCVar( 'findyourselfanywhere',0,nil,true );
+                    C_CVar.SetCVar( 'graphicsOutlineMode',0 ); -- turn off outline
+                    C_CVar.SetCVar( 'raidGraphicsOutlineMode',0 ); -- turn off outline
                 end
             end
         end
@@ -153,12 +155,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             local Value = Addon.APP:GetVarValue( 'nameplateShowFriendlyNPCs' );
 
             if( Value ) then
-                if( GetCVar( 'UnitNameNPC' ) ~= 1 ) then
-                    SetCVar( 'UnitNameNPC',1,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameNPC' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'UnitNameNPC',1,nil,true );
                 end
             else
-                if( GetCVar( 'UnitNameNPC' ) ~= 0 ) then
-                    SetCVar( 'UnitNameNPC',0,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameNPC' ) ~= 0 ) then
+                    C_CVar.SetCVar( 'UnitNameNPC',0,nil,true );
                 end
             end
         end
@@ -167,12 +169,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             local Value = Addon.APP:GetVarValue( 'NameplatePersonalShowAlways' );
 
             if( tonumber( Value ) > 0 ) then
-                if( GetCVar( 'UnitNameOwn' ) ~= 1 ) then
-                    SetCVar( 'UnitNameOwn',1,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameOwn' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'UnitNameOwn',1,nil,true );
                 end
             else
-                if( GetCVar( 'UnitNameOwn' ) ~= 0 ) then
-                    SetCVar( 'UnitNameOwn',0,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameOwn' ) ~= 0 ) then
+                    C_CVar.SetCVar( 'UnitNameOwn',0,nil,true );
                 end
             end
         end
@@ -181,33 +183,33 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             local Value = Addon.APP:GetVarValue( 'nameplateShowAll' );
 
             if( tonumber( Value ) > 0 ) then
-                if( GetCVar( 'UnitNameOwn' ) ~= 1 ) then
-                    SetCVar( 'UnitNameOwn',1,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameOwn' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'UnitNameOwn',1,nil,true );
                 end
-                if( GetCVar( 'UnitNameFriendlyPlayerName' ) ~= 1 ) then
-                    SetCVar( 'UnitNameFriendlyPlayerName',1,nil,true );
+                if( C_CVar.GetCVar( 'UnitNameFriendlyPlayerName' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'UnitNameFriendlyPlayerName',1,nil,true );
                 end
-                if( GetCVar( 'nameplateShowFriendlyNPCs' ) ~= 1 ) then
-                    SetCVar( 'nameplateShowFriendlyNPCs',1,nil,true );
+                if( C_CVar.GetCVar( 'nameplateShowFriendlyNPCs' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'nameplateShowFriendlyNPCs',1,nil,true );
                 end
             end
         end
 
         Addon.APP.RefreshEnableRaidSettings = function( self )
-            if( GetCVar( 'RAIDsettingsEnabled' ) ~= 1 ) then
-                SetCVar( 'RAIDsettingsEnabled',1,nil,true );
+            if( C_CVar.GetCVar( 'RAIDsettingsEnabled' ) ~= 1 ) then
+                C_CVar.SetCVar( 'RAIDsettingsEnabled',1,nil,true );
             end
         end
 
         Addon.APP.RefreshEnableVolumeFog = function( self )
-            if( GetCVar( 'volumeFog' ) ~= 1 ) then
-                SetCVar( 'volumeFog',1,nil,true );
+            if( C_CVar.GetCVar( 'volumeFog' ) ~= 1 ) then
+                C_CVar.SetCVar( 'volumeFog',1,nil,true );
             end
         end
 
         Addon.APP.RefreshEnableRaidVolumeFog = function( self )
-            if( GetCVar( 'RAIDVolumeFog' ) ~= 1 ) then
-                SetCVar( 'RAIDVolumeFog',1,nil,true );
+            if( C_CVar.GetCVar( 'RAIDVolumeFog' ) ~= 1 ) then
+                C_CVar.SetCVar( 'RAIDVolumeFog',1,nil,true );
             end
         end
 
@@ -225,17 +227,18 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Full dynamic shadows.
             ]]
             local Value = tonumber( Addon.APP:GetVarValue( 'graphicsShadowQuality' ) );
-            if( Value == 0 ) then
-                if( GetCVar( 'shadowMode' ) ~= 0 ) then
-                    SetCVar( 'shadowMode',0,nil,true );
+
+            if( tonumber( Value ) == 0 ) then
+                if( C_CVar.GetCVar( 'shadowMode' ) ~= 0 ) then
+                    C_CVar.SetCVar( 'shadowMode',0,nil,true );
                 end
-            elseif( Value > 0 and Value <= 3 ) then
-                if( GetCVar( 'shadowMode' ) ~= 1 ) then
-                    SetCVar( 'shadowMode',1,nil,true );
+            elseif( tonumber( Value ) > 0 and tonumber( Value ) <= 3 ) then
+                if( C_CVar.GetCVar( 'shadowMode' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'shadowMode',1,nil,true );
                 end
-            else -- Value > 3
-                if( GetCVar( 'shadowMode' ) ~= 3 ) then
-                    SetCVar( 'shadowMode',3,nil,true );
+            else -- tonumber( Value ) > 3
+                if( C_CVar.GetCVar( 'shadowMode' ) ~= 3 ) then
+                    C_CVar.SetCVar( 'shadowMode',3,nil,true );
                 end
             end
         end
@@ -254,64 +257,67 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Full dynamic shadows.
             ]]
             local Value = tonumber( Addon.APP:GetVarValue( 'raidGraphicsShadowQuality' ) );
-            if( Value == 0 ) then
-                if( GetCVar( 'RAIDshadowMode' ) ~= 0 ) then
-                    SetCVar( 'RAIDshadowMode',0,nil,true );
+
+            if( tonumber( Value ) == 0 ) then
+                if( C_CVar.GetCVar( 'RAIDshadowMode' ) ~= 0 ) then
+                    C_CVar.SetCVar( 'RAIDshadowMode',0,nil,true );
                 end
-            elseif( Value > 0 and Value <= 3 ) then
-                if( GetCVar( 'RAIDshadowMode' ) ~= 1 ) then
-                    SetCVar( 'RAIDshadowMode',1,nil,true );
+            elseif( tonumber( Value ) > 0 and tonumber( Value ) <= 3 ) then
+                if( C_CVar.GetCVar( 'RAIDshadowMode' ) ~= 1 ) then
+                    C_CVar.SetCVar( 'RAIDshadowMode',1,nil,true );
                 end
-            else -- Value > 3
-                if( GetCVar( 'RAIDshadowMode' ) ~= 3 ) then
-                    SetCVar( 'RAIDshadowMode',3,nil,true );
+            else -- tonumber( Value ) > 3
+                if( C_CVar.GetCVar( 'RAIDshadowMode' ) ~= 3 ) then
+                    C_CVar.SetCVar( 'RAIDshadowMode',3,nil,true );
                 end
             end
         end
 
         Addon.APP.RefreshParticleDensity = function( self )
             local Value = tonumber( Addon.APP:GetVarValue( 'particleDensity' ) );
-            if( Value == 0 ) then
+
+            if( tonumber( Value ) == 0 ) then
                 -- disabled
-                SetCVar( 'graphicsParticleDensity',0,nil,true );
-            elseif( Value == 10 ) then
+                C_CVar.SetCVar( 'graphicsParticleDensity',0,nil,true );
+            elseif( tonumber( Value ) == 10 ) then
                 -- low
-                SetCVar( 'graphicsParticleDensity',1,nil,true );
-            elseif( Value == 25 ) then
+                C_CVar.SetCVar( 'graphicsParticleDensity',1,nil,true );
+            elseif( tonumber( Value ) == 25 ) then
                 -- fair
-                SetCVar( 'graphicsParticleDensity',2,nil,true );
-            elseif( Value == 50 ) then
+                C_CVar.SetCVar( 'graphicsParticleDensity',2,nil,true );
+            elseif( tonumber( Value ) == 50 ) then
                 -- good
-                SetCVar( 'graphicsParticleDensity',3,nil,true );
-            elseif( Value == 80 ) then
+                C_CVar.SetCVar( 'graphicsParticleDensity',3,nil,true );
+            elseif( tonumber( Value ) == 80 ) then
                 -- high
-                SetCVar( 'graphicsParticleDensity',4,nil,true );
-            elseif( Value == 100 ) then
+                C_CVar.SetCVar( 'graphicsParticleDensity',4,nil,true );
+            elseif( tonumber( Value ) == 100 ) then
                 -- ultra
-                SetCVar( 'graphicsParticleDensity',5,nil,true );
+                C_CVar.SetCVar( 'graphicsParticleDensity',5,nil,true );
             end
         end
 
         Addon.APP.RefreshRaidParticleDensity = function( self )
             local Value = tonumber( Addon.APP:GetVarValue( 'RAIDparticleDensity' ) );
-            if( Value == 0 ) then
+
+            if( tonumber( Value ) == 0 ) then
                 -- disabled
-                SetCVar( 'raidGraphicsParticleDensity',0,nil,true );
-            elseif( Value == 10 ) then
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',0,nil,true );
+            elseif( tonumber( Value ) == 10 ) then
                 -- low
-                SetCVar( 'raidGraphicsParticleDensity',1,nil,true );
-            elseif( Value == 25 ) then
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',1,nil,true );
+            elseif( tonumber( Value ) == 25 ) then
                 -- fair
-                SetCVar( 'raidGraphicsParticleDensity',2,nil,true );
-            elseif( Value == 50 ) then
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',2,nil,true );
+            elseif( tonumber( Value ) == 50 ) then
                 -- good
-                SetCVar( 'raidGraphicsParticleDensity',3,nil,true );
-            elseif( Value == 80 ) then
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',3,nil,true );
+            elseif( tonumber( Value ) == 80 ) then
                 -- high
-                SetCVar( 'raidGraphicsParticleDensity',4,nil,true );
-            elseif( Value == 100 ) then
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',4,nil,true );
+            elseif( tonumber( Value ) == 100 ) then
                 -- ultra
-                SetCVar( 'raidGraphicsParticleDensity',5,nil,true );
+                C_CVar.SetCVar( 'raidGraphicsParticleDensity',5,nil,true );
             end
         end
 
@@ -411,9 +417,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                         ReloadUI();
                         return;
                     end
-                    local Input = self:GetParent().Edit.Input
-                    Input:HighlightText( 0 );
-                    Input:SetFocus();
+                    Addon.FRAMES:Warn( 'You will need to reload your UI for changes to be applied' );
+                    self:GetParent():Hide();
                 end
 
                 if( Addon.DB:GetValue( 'Debug' ) ) then
@@ -452,7 +457,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             for VarName,VarData in pairs( Addon.DB:GetPersistence().Vars ) do
                 if( not VarData.Missing ) then
 
-                    local Updated = SetCVar( Addon:Minify( VarName ),VarData.Value,nil,true );
+                    local Updated = C_CVar.SetCVar( Addon:Minify( VarName ),VarData.Value,nil,true );
 
                     if( Updated and self.Registry[ Addon:Minify( VarName ) ] and self.Registry[ Addon:Minify( VarName ) ].Cascade ) then
                         for Handling,_ in pairs( self.Registry[ Addon:Minify( VarName ) ].Cascade ) do
@@ -898,8 +903,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
                 Input:HighlightText( 0 );
                 Input:SetFocus();
-
-                Addon.FRAMES:Warn( 'This will cause your game to temporarily freeze' );
             end );
 
             local ExportCVs = {
