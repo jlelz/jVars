@@ -90,23 +90,32 @@ Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
                     self:GetPersistence().Vars[ string.lower( Index ) ].Value = Value;
                 end
             end
-            if( Addon.REG:GetRegistry()[ string.lower( Index ) ] ) then
-                if( Addon.REG:GetRegistry()[ string.lower( Index ) ].Type == 'Toggle' ) then
-                    if( tonumber( self:GetPersistence().Vars[ string.lower( Index ) ].Value ) ~= tonumber( Addon.DICT:GetDictionary()[ string.lower( Index ) ].DefaultValue ) ) then
-                        self:GetPersistence().Vars[ string.lower( Index ) ].Modified = true;
-                        self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total + 1;
-                    else
-                        self:GetPersistence().Vars[ string.lower( Index ) ].Modified = false;
-                        self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total - 1;
-                    end
-                else
 
-                    if( tostring( self:GetPersistence().Vars[ string.lower( Index ) ].Value ) ~= tostring( Addon.DICT:GetDictionary()[ string.lower( Index ) ].DefaultValue ) ) then
-                        self:GetPersistence().Vars[ string.lower( Index ) ].Modified = true;
-                        self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total + 1;
+            -- Test the data
+            local IsValid = function( VarName )
+                return Addon.DICT:GetDictionary()[ string.lower( VarName ) ] ~= nil;
+            end
+
+            if( Addon.REG:GetRegistry()[ string.lower( Index ) ] ) then
+
+                -- Defaults
+                self:GetPersistence().Vars[ string.lower( Index ) ].Modified = false;
+                if( tonumber( self:GetPersistence().Modified.Total ) > 0 ) then
+                    self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total - 1;
+                end
+
+                -- Increments
+                if( IsValid( Index ) ) then
+                    if( Addon.REG:GetRegistry()[ string.lower( Index ) ].Type == 'Toggle' ) then
+                        if( tonumber( self:GetPersistence().Vars[ string.lower( Index ) ].Value ) ~= tonumber( Addon.DICT:GetDictionary()[ string.lower( Index ) ].DefaultValue ) ) then
+                            self:GetPersistence().Vars[ string.lower( Index ) ].Modified = true;
+                            self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total + 1;
+                        end
                     else
-                        self:GetPersistence().Vars[ string.lower( Index ) ].Modified = false;
-                        self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total - 1;
+                        if( tostring( self:GetPersistence().Vars[ string.lower( Index ) ].Value ) ~= tostring( Addon.DICT:GetDictionary()[ string.lower( Index ) ].DefaultValue ) ) then
+                            self:GetPersistence().Vars[ string.lower( Index ) ].Modified = true;
+                            self:GetPersistence().Modified.Total = self:GetPersistence().Modified.Total + 1;
+                        end
                     end
                 end
             end
