@@ -1430,10 +1430,6 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
-                colorChatNamesByClass = {
-                    Type = 'Toggle',
-                    Category = 'Social',
-                },
                 guildMemberNotify = {
                     Type = 'Toggle',
                     Category = 'Social',
