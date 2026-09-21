@@ -42,7 +42,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     ReloadUI();
                 end
             end
-Addon:Dump( { Index = Index })
+
             if( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary ) then
                 Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary.CurrentValue = C_CVar.GetCVar( Index );
             end
