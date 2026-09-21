@@ -12,37 +12,44 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         --  @param  string  Value
         --  @return bool
         Addon.APP.SetVarValue = function( self,Index,Value,Importing )
-            local Result = Addon.DB:SetVarValue( Index,Value );
-            if( Result ) then
-                if( not Importing ) then 
-                    self:Query(); 
-                end
-                local Updated = C_CVar.SetCVar( Index,Value );
-                local VarData = self.Registry[ Addon:Minify( Index ) ];
-                if( VarData and VarData.Cascade ) then
-                    for Handling,_ in pairs( VarData.Cascade ) do
-                        if( Addon.APP[Handling] ) then
-                            Addon.APP[Handling]( Index,VarData,true );
-                        end
-                    end
-                end
+            local Updated = C_CVar.SetCVar( Index,Value );
+            if( not( Updated ) ) then
+                return false;
+            end
 
-                if( not Importing ) then
-                    if( Addon.DB:GetValue( 'ReloadGX' ) ) then
-                        RestartGx();
-                    end
-                    if( Addon.DB:GetValue( 'ReloadUI' ) ) then
-                        ReloadUI();
-                    end
-                end
+            local Saved = Addon.DB:SetVarValue( Index,Value );
+            if( not( Saved ) ) then
+                return false;
+            end
 
-                if( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary ) then
-                    Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary.CurrentValue = GetCVar( Index );
-                end
-                if( Addon.DB:GetValue( 'Debug' ) ) then
-                    Addon:Dump( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ] );
+            if( not Importing ) then 
+                self:Query(); 
+            end
+            local VarData = self.Registry[ Addon:Minify( Index ) ];
+            if( VarData and VarData.Cascade ) then
+                for Handling,_ in pairs( VarData.Cascade ) do
+                    if( Addon.APP[Handling] ) then
+                        Addon.APP[Handling]( Index,VarData,true );
+                    end
                 end
             end
+
+            if( not Importing ) then
+                if( Addon.DB:GetValue( 'ReloadGX' ) ) then
+                    RestartGx();
+                end
+                if( Addon.DB:GetValue( 'ReloadUI' ) ) then
+                    ReloadUI();
+                end
+            end
+Addon:Dump( { Index = Index })
+            if( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary ) then
+                Addon.DB:GetPersistence().Vars[ string.lower( Index ) ].Dictionary.CurrentValue = C_CVar.GetCVar( Index );
+            end
+            if( Addon.DB:GetValue( 'Debug' ) ) then
+                Addon:Dump( Addon.DB:GetPersistence().Vars[ string.lower( Index ) ] );
+            end
+            return true;
         end
 
         --
@@ -1022,6 +1029,7 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 ]]
             end
 
+            -- Outside updates, update inside
             hooksecurefunc( 'SetCVar',function( ... )
                 local Index,Value,Ignored,Internal = ...;
                 if( not Internal ) then
