@@ -267,6 +267,14 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
+                UnitSurnameOwn = {
+                    Type = 'Toggle',
+                    Category = 'Character',
+                },
+                UnitNameOwn = {
+                    Type = 'Toggle',
+                    Category = 'Character',
+                },
                 autoRangedCombat = {
                     Type = 'Toggle',
                     Category = 'Hud',
