@@ -589,10 +589,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             Addon.VIEW:GetStats( FilteredList,Addon.APP,Addon.Theme );
         end
 
-        Addon.APP.SetPosition = function( self,Pos )
-            self:SetValue( 'Position',Pos );
-        end
-
         Addon.APP.GetPosition = function( self )
             return self:GetValue( 'Position' );
         end
@@ -695,14 +691,14 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             self.Config:HookScript( 'OnDragStop',function( self )
                 Addon.APP.Config:StopMovingOrSizing();
                 local Point,RT,RP,x,y = Addon.APP.Config:GetPoint();
-                local Data = {
+                local Position = {
                     Point = Point,
                     RT = RT,
                     RP = RP,
                     x = x,
                     y = y,
                 };
-                Addon.APP:SetPosition( Data );
+                Addon.APP:SetValue( 'Position',Position );
                 Addon.APP.Config:SetUserPlaced( true );
             end );
 
