@@ -374,6 +374,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 if( Value ) then
                     Input:SetText( '' );
                 end
+                Input:HighlightText( 0 );
+                Input:SetFocus();
             end );
 
             Frame.Ok = Addon.FRAMES:AddButton( {
