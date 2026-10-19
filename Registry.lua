@@ -1316,11 +1316,11 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Range',
                     KeyPairs = {
                         Low = {
-                            Value = 1,
+                            Value = 0,
                             Description = 'Low',
                         },
                         High = {
-                            Value = 10,
+                            Value = 9,
                             Description = 'High',
                         },
                     },
@@ -1930,11 +1930,11 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Range',
                     KeyPairs = {
                         Low = {
-                            Value = 1,
+                            Value = 0,
                             Description = 'Low',
                         },
                         High = {
-                            Value = 10,
+                            Value = 9,
                             Description = 'High',
                         },
                     },
@@ -1979,33 +1979,39 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Category = 'Graphics',
                 },
                 groundEffectDensity = {
-                    Type = 'Range',
+                    Type = 'Select',
                     KeyPairs = {
-                        Low = {
+                        {
                             Value = 16,
                             Description = 'Low',
                         },
-                        High = {
-                            Value = 256,
+                        {
+                            Value = 80,
                             Description = 'High',
                         },
+                        {
+                            Value = 256,
+                            Description = 'Max',
+                        },
                     },
-                    Step = 16,
                     Category = 'Graphics',
                 },
                 RAIDgroundEffectDensity = {
-                    Type = 'Range',
+                    Type = 'Select',
                     KeyPairs = {
-                        Low = {
+                        {
                             Value = 16,
                             Description = 'Low',
                         },
-                        High = {
-                            Value = 256,
+                        {
+                            Value = 80,
                             Description = 'High',
                         },
+                        {
+                            Value = 256,
+                            Description = 'Max',
+                        },
                     },
-                    Step = 16,
                     Category = 'Graphics',
                     Cascade = {
                         RefreshEnableRaidSettings = {
