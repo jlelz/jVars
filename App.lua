@@ -338,6 +338,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.APP.RefreshCompactPartyFrame = function( VarName,VarData,Manual )
         end
 
+        -- @todo: nameplateStyle was exporting 0 as 1. 
+        -- figure out why
         Addon.APP.AddMovablePort = function( self,Parent )
 
             local Frame = Addon.FRAMES:AddAcknowledge( {
