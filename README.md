@@ -28,7 +28,9 @@ https://github.com/jlelz/jVars/issues
   <img src="https://i.imgur.com/B3PMwON.jpeg" width="500" /> 
 </p>
 
-## Paste
+## Imports
 <a href="https://github.com/jlelz/jVars/blob/main/Paste/forever.txt">Forever Export</a>
+
 <a href="https://github.com/jlelz/jVars/blob/main/Paste/clssic.txt">Classic Export</a>
+
 <a href="https://github.com/jlelz/jVars/blob/main/Paste/retail.txt">Retail Export</a>
