@@ -29,6 +29,6 @@ https://github.com/jlelz/jVars/issues
 </p>
 
 ## Paste
-<a href="https://github.com/jlelz/jVars/Paste/forever.txt">Forever Export</a>
-<a href="https://github.com/jlelz/jVars/Paste/classic.txt">Classic Export</a>
-<a href="https://github.com/jlelz/jVars/Paste/retail.txt">Retail Export</a>
+<a href="https://github.com/jlelz/jVars/blob/main/Paste/forever.txt">Forever Export</a>
+<a href="https://github.com/jlelz/jVars/blob/main/Paste/clssic.txt">Classic Export</a>
+<a href="https://github.com/jlelz/jVars/blob/main/Paste/retail.txt">Retail Export</a>
