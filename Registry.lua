@@ -2064,6 +2064,32 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     Type = 'Toggle',
                     Category = 'Hud',
                 },
+                questTextContrast = {
+                    Type = 'Select',
+                    KeyPairs = {
+                        {
+                            Value = 0,
+                            Description = 'Default',
+                        },
+                        {
+                            Value = 1,
+                            Description = 'Brown',
+                        },
+                        {
+                            Value = 2,
+                            Description = 'White',
+                        },
+                        {
+                            Value = 3,
+                            Description = 'Grey',
+                        },
+                        {
+                            Value = 4,
+                            Description = 'Black',
+                        },
+                    },
+                    Category = 'Hud',
+                },
                 autoAcceptQuickJoinRequests = {
                     Type = 'Toggle',
                     Category = 'Hud',
