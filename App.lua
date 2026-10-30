@@ -832,6 +832,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             MovingPort:SetScript( 'OnShow',function( self )
                 self.Edit.Input:SetFocus();
             end );
+            MovingPort:SetScript( 'OnHide',function( self )
+                self.Edit.Input:ClearFocus();
+            end );
 
             local RefreshData = {
                 Name = 'Refresh',
