@@ -463,7 +463,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                 return;
             end
             
-            Addon.FRAMES:Notify( 'Refreshing all settings...' );
+            if( Addon.DB:GetValue( 'Debug' ) ) then
+                Addon.FRAMES:Notify( 'Refreshing all settings...' );
+            end
 
             for VarName,VarData in pairs( Addon.DB:GetPersistence().Vars ) do
                 if( not VarData.Missing ) then
@@ -479,8 +481,6 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     end
                 end
             end;
-
-            Addon.FRAMES:Notify( 'Done' );
         end
 
         Addon.APP.FrameRegister = function( self,FrameData )
@@ -1055,12 +1055,21 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             Addon.APP:Query();
         end
-        
-        Addon.FRAMES:Notify( 'Prepping...please wait' );
+
         Addon.DB:Init();
+        
+        if( Addon.DB:GetValue( 'Debug' ) ) then
+            Addon.FRAMES:Notify( 'Prepping. Please wait...' );
+        end
+
         Addon.APP:Init();
+
         if( Addon.APP:GetValue( 'Refresh' ) ) then
             Addon.APP:Refresh();
+        end
+
+        if( Addon.DB:GetValue( 'Debug' ) ) then
+            Addon.FRAMES:Notify( 'Done' );
         end
 
         self:UnregisterEvent( 'ADDON_LOADED' );
