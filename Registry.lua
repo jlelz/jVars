@@ -3646,6 +3646,43 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     },
                     Category = 'Graphics',
                 },
+                bloomUserMult = {
+                    Type = 'Range',
+                    KeyPairs = {
+                        Low = {
+                            Value = 0,
+                            Description = 'Low',
+                        },
+                        High = {
+                            Value = 1,
+                            Description = 'High',
+                        },
+                    },
+                    Step = 0.2,
+                    Category = 'Graphics',
+                },
+                giQuality = {
+                    Type = 'Select',
+                    KeyPairs = {
+                        {
+                            Value = 0,
+                            Description = 'Fair',
+                        },
+                        {
+                            Value = 1,
+                            Description = 'Good',
+                        },
+                        {
+                            Value = 2,
+                            Description = 'High',
+                        },
+                        {
+                            Value = 3,
+                            Description = 'Ultra',
+                        },
+                    },
+                    Category = 'Graphics',
+                },
                 maxLightDist = {
                     Type = 'Select',
                     KeyPairs = {
