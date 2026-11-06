@@ -14,6 +14,14 @@ Addon.REG:SetScript( 'OnEvent',function( self,Event,AddonName )
         --  @return table
         Addon.REG.GetRegistry = function( self )
             local Registry = {
+                cooldownViewerEnabled = {
+                    Type = 'Toggle',
+                    Category = 'Hud',
+                },
+                damageMeterEnabled = {
+                    Type = 'Toggle',
+                    Category = 'Hud',
+                },
                 disableSuggestedLevelActivityFilter = {
                     Type = 'Toggle',
                     Category = 'Hud',
